@@ -1,0 +1,251 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pfedick $
+ * $Revision: 1.2 $
+ * $Date: 2009/03/12 11:56:19 $
+ * $Id: usage.dox,v 1.2 2009/03/12 11:56:19 pfedick Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+/*!\defgroup DCHK_usage API Usage
+ * 
+ * The following chapters will show you how to include the functionality of the DCHK library
+ * in your own C or C++ programs.
+ */
+
+/*!\defgroup DCHK_usage_include Include DCHK library in your project
+ * 
+ * \ingroup DCHK_usage
+
+To use the functions of the DCHK library, you have to do two things:
+- Include the header file in your sources
+- Add Path of header file, library and required libraries to your Makefile
+
+<b>Source:</b>
+\verbatim 
+#include <dchk.h>
+\endverbatim
+
+<b>Makefile:</b>
+\verbatim
+# Add path of DCHK-header file to your CFLAGS
+CFLAGS =  -I/usr/local/include
+# Add required libraries to LIBS
+LIBS = -lstdc++ -lresolv  -L/usr/local/lib -ldchk -lxml2 -lz -lm 
+\endverbatim
+*/
+
+/*!\defgroup DCHK_usage_win32 Windows specific
+ * 
+ * \ingroup DCHK_usage
+
+On Microsoft Windows it is necessary to initialize the windows socket API before you can
+use any socket functionality. This is done by calling the WSAStartup-function.
+
+The following example shows how to call WSAStartup:
+\code
+#include <winsock2.h>
+...
+WORD wVersionRequested;
+WSADATA wsaData;
+int err;
+wVersionRequested = MAKEWORD( 2, 2 );	// desired winsock version 2.2
+err = WSAStartup( wVersionRequested, &wsaData );
+if (err!=0)	{
+	// Handle error
+} else {
+	// everything is fine, you can continue
+}
+\endcode
+
+You can call the \ref irislwz_InitWSA function of the DCHK library to do this for you. You should
+call the function as early as possible before you start any additional threads.
+
+When linking the program you have to add \b Ws2_32.lib and \b Dnsapi.lib as additional
+libraries.
+
+*/
+
+/*!\defgroup DCHK_usage_example1 Example 1: Low level communication
+ * 
+ * \ingroup DCHK_usage
+
+The following example shows how to implement a low level communication with a DCHK server
+by using only the irislwz_*-functions. This approach is most flexible and gives you
+the ability to test invalid combinations of flags or invalid XML. But it's also the
+most work.
+
+\dontinclude example1.c
+\skip #include
+\until // end
+
+To compile the example with gcc, type:
+\code
+gcc -I/usr/local/include -L/usr/local/lib example1.c -o example1 -ldchk -lxml2
+\endcode
+You probably have to add or change the path statements on your environment.
+
+When calling the compiled example with a domain name, you will get the following answer:
+\code
+./example1 denic.de
+
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" registryType="dchk1" entityClass="domain-name" entityName="denic.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>denic.de</urn:domainName>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-06-10T09:45:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+\endcode	
+*/
+
+/*!\defgroup DCHK_usage_example2 Example 2: Using dchk-functions
+ * 
+ * \ingroup DCHK_usage
+
+The next example does exact the same thing, but uses the \ref dchk_QueryDomain function:
+\dontinclude example2.c
+\skip #include
+\until // end
+
+Compilation:
+\code
+gcc -I/usr/local/include -L/usr/local/lib example2.c -o example2 -ldchk -lxml2
+\endcode
+*/
+
+/*!\defgroup DCHK_usage_example3 Example 3: Using DNS to find a DCHK server
+ * 
+ * \ingroup DCHK_usage
+
+The third example again does the same thing, but uses DNS to find a suitable DCHK server
+and has a bit less code:
+\dontinclude example3.c
+\skip #include
+\until // end
+We don't set the Timeout manually, as the default is already 5 seconds. We use the authority
+default, too.
+Compilation:
+\code
+gcc -I/usr/local/include -L/usr/local/lib example3.c -o example3 -ldchk -lxml2 -lresolv
+\endcode
+Please note that we need the resolver library now.
+*/
+
+/*!\defgroup DCHK_usage_example4 Example 4: Query several domains
+ * 
+ * \ingroup DCHK_usage
+The next example shows how to use a domainlist to query several domains in one step. It also uses
+the \ref dchk_PrintResults function to print the result and does not print the raw XML output.
+\dontinclude example4.c
+\skip #include
+\until // end
+
+Compilation:
+\code
+gcc -I/usr/local/include -L/usr/local/lib example4.c -o example4 -ldchk -lxml2 -lresolv
+\endcode
+
+\code
+./example4 denic.de opsblau.de example.de fdefdw3e.de urgs#123.de
+denic.de: active [2008-06-10T10:55:00+02:00]
+opsblau.de: active [2008-06-10T10:55:00+02:00]
+example.de: active [2008-06-10T10:55:00+02:00]
+fdefdw3e.de: free
+urgs#123.de: invalid
+\endcode
+*/
+
+/*!\defgroup DCHK_usage_example5 Example 5: C++
+ * 
+ * \ingroup DCHK_usage
+
+The last example uses the C++ API and uses a domain list to query several domains
+in one step.
+\dontinclude example5.cpp
+\skip #include
+\until // end
+
+Compilation:
+\code
+g++ -o example5 example5.cpp -I/usr/local/include -lstdc++  \
+-ldnsapi -L/usr/local/lib -ldchk -lxml2 -L/usr/local/lib -lz -lws2_32 -ldnsapi
+\endcode
+*/
+
+
+/*!\defgroup DCHK_autoconf Autoconf macro
+ * 
+ * \ingroup DCHK_usage
+ * 
+ * If you want to find the dchk-library within an autoconf configure script, you can use the m4-macro provided
+ * in this distribution.
+ * 
+ * You will find the file <b>dchk.m4</b> in the <tt>autoconf</tt> directory:
+ * 
+ * \include dchk.m4
+ * 
+ * \remarks
+ * The Script expects, that the \b zlib and \b libxml2 libraries are already checked and the options to find and use them stored in
+ * the CPPFLAGS and LIBS variable. A typical configure script could look like this:
+\code
+sinclude(autoconf/libxml2.m4)
+sinclude(autoconf/dchk.m4)
+sinclude(autoconf/zlib.m4)
+# Required libraries
+AM_ZLIB
+if test "$report_have_zlib" == "no"
+then
+	AC_MSG_ERROR(zlib is required but not found)
+fi 
+
+AM_PATH_XML2([2.6.10],
+	AC_DEFINE(HAVE_XML2, 1, [ Define if you have libxml2. ])
+	LIBS="$LIBS $XML_LIBS"
+	CPPFLAGS="$CPPFLAGS $XML_CPPFLAGS"
+	CFLAGS="$CFLAGS $XML_CPPFLAGS"
+	,
+	AC_MSG_ERROR(no suitable libxml2 available)
+	)
+
+
+AM_DCHK([0.2.4],
+	AC_DEFINE(HAVE_DCHK, 1, [ Define if you have lib DCHK. ])
+	CFLAGS="$DCHK_CFLAGS $CFLAGS"
+	CPPFLAGS="$DCHK_CFLAGS $CPPFLAGS"
+	LIBS="$DCHK_LIBS $LIBS"
+	,
+	AC_MSG_ERROR(no suitable dchk library available)
+	)
+\endcode
+The "AM_ZLIB" macro automatically adds parameters to LIBS and CPPLFLAG, while "AM_PATH_XML2" does not.
+You can find the "AM_PATH_XML2" macro in <tt>autoconf/libxml2.m4</tt> and "AM_ZLIB" in <tt>autoconf/zlib.m4</tt>.
+\note
+The feature to check the version of the dchk library is not yet included.
+ */
+

@@ -1,0 +1,70 @@
+#
+# This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+# (http://dchk.sourceforge.net/). It can be used to check the availability
+# of domains by using the DCHK protocol described in RFC 5144.
+#
+# $Author: pafe $
+# $Revision: 1.3 $
+# $Date: 2009/03/28 22:09:14 $
+# $Id: qdchk.pro.in,v 1.3 2009/03/28 22:09:14 pafe Exp $
+#
+#
+# Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# SoftwareFoundation; either version 3 of the License, or (at your option) any
+# later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+#
+
+CONFIG += debug_and_release
+TEMPLATE = app
+INCLUDEPATH += app
+unix:INCLUDEPATH += /usr/local/include
+unix:QMAKE_CXXFLAGS +=  -I/usr/local/include/libxml2 -I/usr/local/include
+win32:INCLUDEPATH += c:\mingw\msys\1.0\local\include
+
+QT += core \
+    gui
+HEADERS += qdchk.h \
+    qdchk.h
+SOURCES += main.cpp \
+    qdchk.cpp
+FORMS += qdchk.ui \
+    qdchk.ui
+RESOURCES += res.qrc \
+    res.qrc \
+    res.qrc
+RC_FILE = qdchk.rc
+CONFIG(debug, debug|release) {
+	TARGET = qdchk-debug
+	unix:LIBS +=  -lstdc++  -L/usr/local/lib -lxml2 -lz -L/usr/local/lib -liconv -lm -ldchk-debug
+	win32:LIBS += -lstdc++ \
+    	-L\'c:\mingw\msys\1.0\local\lib\' \
+    	-ldchk-debug \
+    	-lxml2 \
+    	-lws2_32 \
+    	-ldnsapi
+	
+} else {
+	TARGET = qdchk
+	unix:LIBS +=  -lstdc++  -L/usr/local/lib -lxml2 -lz -L/usr/local/lib -liconv -lm -ldchk
+	win32:LIBS += -lstdc++ \
+    	-L\'c:\mingw\msys\1.0\local\lib\' \
+    	-ldchk \
+    	-lxml2 \
+    	-lws2_32 \
+    	-ldnsapi
+	
+}
+
+# EOF
+    

@@ -1,0 +1,178 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pfedick $
+ * $Revision: 1.3 $
+ * $Date: 2009/03/12 11:56:19 $
+ * $Id: main.dox,v 1.3 2009/03/12 11:56:19 pfedick Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+/*!\mainpage DCHK Client Documentation
+\section dchk_introduction Introduction
+
+DCHK is the abbreviation of <b>D</b>omainavailability<b>CH</b>ec<b>K</b>, and is an IRIS based protocol to
+query domain status. It is meant as a more formal replacement of the whois protocol.
+
+Advantages of DCHK compared to whois:
+- DCHK supports international domain names (IDN) with country specific characters by default, because
+  it is based on UTF-8 / UTF-16 (Unicode)
+- Formal request and answer by using XML
+- UDP-protocol is simpler and faster than TCP
+- request and answer can be compressed
+- several domains can be queried with one request 
+
+Disadvantages:
+- UDP is unreliable
+- UDP-packet size is limited. An IRIS-LWZ request or answer must fit into a single UDP packet. If the
+  "path MTU" is not known the packet must not exceed 1500 bytes, otherwise it can be as big as the MTU but
+  not bigger than 4000 bytes.
+- XML is more difficult to handle 
+
+This software contains a client implementation of the IrisLWZ- and DCHK-protocol, written in C and C++. It is divided in
+three parts:
+-# a library, which you can use in your own programs
+-# a command line client
+-# a graphical user interface (GUI)
+
+As DCHK is a quite new protocol, the library contains some features to manipulate requests, which are not useful for general usage,
+but might be of some use if you want to test a servers behavior.
+ 
+The library and clients are placed under the
+<a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>
+(see \ref DCHK_license).
+  
+\image html  lgplv3-147x51.png
+\image latex lgplv3-147x51.png  "LGPL-Logo" width=2cm
+
+
+\section DCHK_index Contents
+- \subpage DCHK_installation
+- \subpage DCHK_bugs
+- \subpage DCHK_client
+- \subpage DCHK_gui
+- \ref DCHK_C_API
+- \ref DCHK_CPP_API
+- \ref DCHK_types
+- \subpage DCHK_usage
+- \subpage DCHK_xml_examples
+- \subpage DCHK_license
+- \subpage DCHK_credits
+- \subpage DCHK_history
+
+\section DCHK_Links Additional information
+
+- <a href="http://www.ietf.org/html.charters/crisp-charter.html">CRISP-Charter</a>
+- <a href="http://tools.ietf.org/html/rfc3707">RFC 3707</a> - Cross Registry Internet Service Protocol (CRISP) - Requirements
+- <a href="http://tools.ietf.org/html/rfc3981">RFC 3981</a> - The Internet Registry Information Service (IRIS) Core Protocol
+- <a href="http://tools.ietf.org/html/rfc3983">RFC 3983</a> - Using the Internet Registry Information Service (IRIS) over the Blocks Extensible Exchange Protocol (BEEP)
+- <a href="http://tools.ietf.org/html/rfc5144">RFC 5144</a> - A Domain Availability Check (DCHK) Registry Type for the Internet Registry Information Service (IRIS)
+- <a href="http://tools.ietf.org/html/rfc4993">RFC 4993</a> - A Lightweight UDP Transfer Protocol for the the Internet Registry Information Service (IRIS)
+- <a href="http://tools.ietf.org/html/rfc4698">RFC 4698</a> - An Address Registry (AREG) Type for the Internet Registry Information Service (IRIS)
+
+
+*/
+
+/*!\page DCHK_license License
+
+This program is copyright 2008 by Patrick Fedick - http://dchk.sourceforge.net
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+SoftwareFoundation; either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+ 
+\include LICENSE.TXT
+*/
+
+
+
+/*!\defgroup DCHK_C_API C-API Functions
+ * \brief C-API
+ * 
+ * The low level C-API is divided in three parts:
+ * - \ref DCHK_errors
+ * - \ref DCHK_API_IRISLWZ
+ * - \ref DCHK_API_DCHK
+ * 
+ * Please see \ref DCHK_usage for more information on using the API.
+ */
+
+/*!\defgroup DCHK_API_IRISLWZ C-API IrisLWZ
+ * \brief The low level API for using the IrisLWZ protocol
+ * 
+ * The following functions implements the Lightweight UDP Transfer Protocol for the the Internet Registry Information Service (IRIS)
+ * as described in <a href="http://tools.ietf.org/html/rfc4993">RFC 4993</a>.
+ * 
+ * Please see \ref DCHK_usage for more information on using the API. 
+ * 
+ * \ingroup DCHK_C_API
+ * 
+ */
+
+/*!\defgroup DCHK_API_DCHK C-API DCHK
+ * \brief API for doing DCHK queries
+ * 
+ * The following functions implement the Domain Availability Check (DCHK) Registry Type for the Internet Registry Information Service (IRIS)
+ * as described in <a href="http://tools.ietf.org/html/rfc5144">RFC 5144</a>. It sits on top of the \ref DCHK_API_IRISLWZ "IrisLWZ C-API".
+ * 
+ * Please see \ref DCHK_usage for more information on using the API.
+ * 
+ * \ingroup DCHK_C_API
+ * 
+ * 
+ */
+
+
+/*!\defgroup DCHK_errors C-API Error-Functions
+ * \brief Functions used for setting and reading of errors
+ * 
+ * Most DCHK-API-functions will return a value on which you can see if
+ * the call was successful or not. A value of 0 or NULL will indicate an error,
+ * all other values will indicate a success.
+ * 
+ * In case of an error you can use the following functions to get further
+ * information about the error:
+ * 
+ * \ingroup DCHK_C_API
+ */
+
+
+/*!\defgroup DCHK_CPP_API C++-API
+ * \brief C++-API
+ * 
+ * The C++-API is a high level interface for the IRIS LWZ protocol and DCHK, which sits on
+ * top of the low level C-API interface. It consists if the following classes, which are
+ * located in the namespace "dchk":
+ * 
+ */
+
+/*!\page DCHK_bugs Bugreports
+If you find any bugs in the program, please send an email to dchk@pfp.de. It should include the version number of DCHK,
+a description of the bug and how to reproduce it. If you found something wrong in the source code, you could tell me
+the filename and line or a code fragment with the bug. 
+
+*/

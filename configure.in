@@ -1,0 +1,224 @@
+#
+# This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+# (http://dchk.sourceforge.net/). It can be used to check the availability
+# of domains by using the DCHK protocol described in RFC 5144.
+#
+# $Author: pfedick $
+# $Revision: 1.10 $
+# $Date: 2009/07/16 11:23:36 $
+# $Id: configure.in,v 1.10 2009/07/16 11:23:36 pfedick Exp $
+#
+#
+# Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# SoftwareFoundation; either version 3 of the License, or (at your option) any
+# later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+#
+
+dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.59)
+AC_INIT([dchk], [0.5.6], [dchk@pfp.de], [dchk-0.5.6.tar.gz])
+AC_COPYRIGHT([Copyright 2008/2009 Patrick Fedick <dchk@pfp.de>])
+AC_REVISION([$Revision: 1.10 $])
+AC_CONFIG_AUX_DIR(autoconf)
+#AM_INIT_AUTOMAKE
+
+AC_CONFIG_SRCDIR([include/dchk.h])
+AC_CONFIG_SRCDIR([src/cli/main.c])
+AC_CONFIG_SRCDIR([src/lib/irislwz.c])
+AC_CONFIG_SRCDIR([src/gui/qdchk.cpp])
+
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([src/gui/qdchk.pro])
+AC_CONFIG_HEADERS([include/config.h])
+
+sinclude(autoconf/checkfuncs.m4)
+sinclude(autoconf/zlib.m4)
+sinclude(autoconf/libxml2.m4)
+sinclude(autoconf/vsnprintf.m4)
+
+
+AC_CANONICAL_TARGET
+
+OLD_CFLAGS=$CFLAGS
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+CFLAGS=$OLD_CFLAGS
+
+AC_C_BIGENDIAN(
+	report_byteorder="BIG ENDIAN"
+	AC_DEFINE(__BIG_ENDIAN__),
+	report_byteorder="LITTLE ENDIAN"
+	AC_DEFINE(__LITTLE_ENDIAN__))
+
+AC_SIZEOF_TYPE(char)
+AC_SIZEOF_TYPE(short)
+AC_SIZEOF_TYPE(int)
+AC_SIZEOF_TYPE(long)
+AC_SIZEOF_TYPE(long long)
+AC_SIZEOF_TYPE(wchar_t)
+AC_SIZEOF_TYPE(size_t)
+AC_CHECK_TYPE(size_t, unsigned)
+
+AC_PATH_PROG(QMAKE,qmake-qt4)
+if test -z "$QMAKE"
+then
+	AC_PATH_PROG(QMAKE,qmake)
+fi
+
+AC_PATH_PROG(MyQtMAKE,mingw32-make)
+if test -z "$MyQtMAKE"
+then
+	AC_PATH_PROG(MyQtMAKE,make)
+fi
+
+
+#--------------------------------------------------------------------
+#       Check for various typedefs and provide substitutes if
+#       they don't exist.
+#--------------------------------------------------------------------
+
+AC_HEADER_STDBOOL
+AC_HEADER_TIME
+AC_TYPE_MODE_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_UID_T
+AC_TYPE_OFF_T
+dnl AC_SIZEOF_TYPE(off_t)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+
+AC_CHECK_HEADERS([stdlib.h])
+AC_CHECK_HEADERS([stdarg.h])
+AC_CHECK_HEADERS([stdio.h])
+AC_CHECK_HEADERS([strings.h])
+AC_CHECK_HEADERS([string.h])
+AC_CHECK_HEADERS([errno.h])
+AC_CHECK_HEADERS([locale.h])
+
+dnl AC_CHECK_HEADERS([unistd.h])
+dnl AC_CHECK_HEADERS([fcntl.h])
+dnl AC_CHECK_HEADERS([sys/file.h])
+dnl AC_CHECK_HEADERS([time.h])
+dnl AC_CHECK_HEADERS([sys/time.h])
+dnl AC_CHECK_HEADERS([sys/types.h])
+dnl AC_CHECK_HEADERS([sys/socket.h])
+dnl AC_CHECK_HEADERS([sys/poll.h])
+dnl AC_CHECK_HEADERS([netdb.h])
+dnl AC_CHECK_HEADERS([arpa/inet.h])
+dnl AC_CHECK_HEADERS([errno.h])
+dnl AC_CHECK_HEADERS([dirent.h])
+dnl AC_CHECK_HEADERS([fnmatch.h])
+dnl AC_CHECK_HEADERS([sys/stat.h])
+
+
+
+AC_CHECK_HEADERS([signal.h])
+AC_CHECK_HEADERS([limits.h])
+AC_CHECK_HEADERS([netinet/in.h])
+AC_CHECK_HEADERS([sys/socket.h])
+AC_CHECK_HEADERS([sys/poll.h])
+AC_CHECK_HEADERS([arpa/inet.h])
+AC_CHECK_HEADERS([arpa/nameser.h])
+AC_CHECK_HEADERS([netdb.h])
+#LIB_SOCKET_NSL
+AC_HEADER_RESOLV
+
+AC_FIND_FUNC(res_query, resolv bind,
+[
+#include <stdio.h>
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_NETINET_IN_H
+#include <netinet/in.h>
+#endif
+#ifdef HAVE_ARPA_NAMESER_H
+#include <arpa/nameser.h>
+#endif
+#ifdef HAVE_RESOLV_H
+#include <resolv.h>
+#endif
+],
+[0,0,0,0,0])
+
+
+
+dnl AC_FUNC_MKTIME
+
+
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_FUNC_VPRINTF
+AC_FUNC_VSNPRINTF
+AC_CHECK_FUNCS([bzero memmove memcpy memset strcasecmp strdup strerror strncasecmp strndup ])
+AC_CHECK_FUNCS([gethostbyname inet_ntoa socket vasprintf])
+AC_CHECK_FUNCS([strcasecmp strdup strerror strncasecmp strndup strstr strcasestr strcmp strncmp])
+AC_CHECK_FUNCS([getpid getppid getuid geteuid setenv putenv getenv signal setlocale])
+AC_CHECK_FUNCS([ns_msg_getflag ns_skiprr ns_initparse ns_parserr])
+
+
+# Required libraries
+AM_ZLIB
+
+if test "$report_have_zlib" = "no"
+then
+	AC_MSG_ERROR(zlib is required but not found)
+fi 
+
+
+AM_PATH_XML2([2.6.10],
+	report_have_xml2="yes"
+	AC_DEFINE(HAVE_XML2, 1, [ Define if you have libxml2. ])
+	,
+	report_have_xml2="no"
+	AC_MSG_ERROR(no suitable libxml2 available)
+	)
+	
+if test "$report_have_xml2" = "no"
+then
+	AC_MSG_ERROR(libxml2 is required but not found)
+fi 
+	
+	
+if test "$build_os" = "mingw32"
+then
+	LIBS="$LIBS -ldnsapi"
+fi
+
+AC_DEFINE(CONF_CFLAGS, [$CFLAGS])
+AC_DEFINE(CONF_LIBS, [$LIBS])
+
+AC_OUTPUT()
+
+
+dnl report configuration
+AC_MSG_RESULT([
+** Configuration summary for $PACKAGE_NAME Version $PACKAGE_VERSION
+** Target: $target_os        CPU: $target_cpu
+
+   Byteorder:                        $report_byteorder
+   Support for libxml2:              $report_have_xml2
+   Support for zlib:                 $report_have_zlib
+   
+])
+
+
+

@@ -1,0 +1,1305 @@
+<ui version="4.0" >
+ <class>qdchkClass</class>
+ <widget class="QDialog" name="qdchkClass" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>819</width>
+    <height>564</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>DomainCheck GUI</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="res.qrc" >
+    <normaloff>:/images/resources/icon32.png</normaloff>:/images/resources/icon32.png</iconset>
+  </property>
+  <property name="autoFillBackground" >
+   <bool>true</bool>
+  </property>
+  <property name="sizeGripEnabled" >
+   <bool>true</bool>
+  </property>
+  <property name="modal" >
+   <bool>false</bool>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTabWidget" name="page" >
+     <property name="currentIndex" >
+      <number>3</number>
+     </property>
+     <widget class="QWidget" name="tab" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>797</width>
+        <height>520</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Query</string>
+      </attribute>
+      <attribute name="icon" >
+       <iconset resource="res.qrc" >
+        <normaloff>:/icons/resources/find.png</normaloff>:/icons/resources/find.png</iconset>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QHBoxLayout" >
+         <item>
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label" >
+               <property name="text" >
+                <string>Domainlist:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="start" >
+               <property name="text" >
+                <string>Start</string>
+               </property>
+               <property name="icon" >
+                <iconset resource="res.qrc" >
+                 <normaloff>:/icons/resources/button_ok.png</normaloff>:/icons/resources/button_ok.png</iconset>
+               </property>
+               <property name="default" >
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="domainlist" >
+             <property name="toolTip" >
+              <string>Enter the domain names you want to query here, one domain per line</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox" >
+           <property name="minimumSize" >
+            <size>
+             <width>350</width>
+             <height>280</height>
+            </size>
+           </property>
+           <property name="maximumSize" >
+            <size>
+             <width>350</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="title" >
+            <string>Options</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_5" >
+                <property name="text" >
+                 <string>Server:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="useDNS" >
+                <property name="toolTip" >
+                 <string>DCHK will make a DNS lookup to find out if a DCHK-Server is available for the TLDs in your Domainlist</string>
+                </property>
+                <property name="whatsThis" >
+                 <string/>
+                </property>
+                <property name="text" >
+                 <string>Use DNS</string>
+                </property>
+                <property name="icon" >
+                 <iconset resource="res.qrc" >
+                  <normaloff>:/icons/resources/database.png</normaloff>:/icons/resources/database.png</iconset>
+                </property>
+                <property name="checked" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QFrame" name="serverFrame" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="frameShape" >
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" >
+               <property name="leftMargin" >
+                <number>30</number>
+               </property>
+               <property name="topMargin" >
+                <number>2</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>2</number>
+               </property>
+               <property name="horizontalSpacing" >
+                <number>6</number>
+               </property>
+               <property name="verticalSpacing" >
+                <number>0</number>
+               </property>
+               <item row="0" column="0" >
+                <widget class="QLabel" name="label_2" >
+                 <property name="text" >
+                  <string>DCHK-Server:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QLineEdit" name="server" >
+                 <property name="toolTip" >
+                  <string>Enter the name or IP of the DCHK-Server to which the queries should be send</string>
+                 </property>
+                 <property name="text" >
+                  <string>dchk.denic.de</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" >
+                <widget class="QLabel" name="label_3" >
+                 <property name="text" >
+                  <string>Port:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" >
+                <widget class="QLineEdit" name="port" >
+                 <property name="maximumSize" >
+                  <size>
+                   <width>80</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="toolTip" >
+                  <string>Enter the port of the DCHK-Server to which the queries should be send (default=715)</string>
+                 </property>
+                 <property name="text" >
+                  <string>715</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" >
+              <property name="horizontalSpacing" >
+               <number>6</number>
+              </property>
+              <property name="verticalSpacing" >
+               <number>0</number>
+              </property>
+              <item row="0" column="0" >
+               <widget class="QLabel" name="label_4" >
+                <property name="text" >
+                 <string>Maximum Packetsize:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" >
+               <widget class="QLineEdit" name="packetsize" >
+                <property name="maximumSize" >
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip" >
+                 <string>Maximum size for answer packets from the DCHK-Server (maximum=4000)</string>
+                </property>
+                <property name="text" >
+                 <string>1500</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2" >
+               <widget class="QLabel" name="label_14" >
+                <property name="text" >
+                 <string>Bytes</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3" >
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>101</width>
+                  <height>23</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QLabel" name="label_12" >
+                <property name="text" >
+                 <string>Timeout:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" >
+               <widget class="QLineEdit" name="timeout" >
+                <property name="toolTip" >
+                 <string>Time to wait for answers from DCHK-server</string>
+                </property>
+                <property name="text" >
+                 <string>3</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2" >
+               <widget class="QLabel" name="label_13" >
+                <property name="text" >
+                 <string>Seconds</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3" >
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>126</width>
+                  <height>23</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout" >
+              <item row="0" column="0" >
+               <widget class="QCheckBox" name="sendCompressed" >
+                <property name="enabled" >
+                 <bool>true</bool>
+                </property>
+                <property name="toolTip" >
+                 <string>Use this to send compressed requests to DCHK-server.&#xd;&#xd;
+You can query more domains at once if you use this</string>
+                </property>
+                <property name="text" >
+                 <string>Send compressed packets</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QCheckBox" name="acceptCompressed" >
+                <property name="toolTip" >
+                 <string>Enable this, if the client should accept compressed answers.&#xd;&#xd;
+Use this, if you want to query many domains at one time.</string>
+                </property>
+                <property name="text" >
+                 <string>Accept compressed packets</string>
+                </property>
+                <property name="checked" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_4" >
+              <property name="minimumSize" >
+               <size>
+                <width>0</width>
+                <height>60</height>
+               </size>
+              </property>
+              <property name="title" >
+               <string>Authority</string>
+              </property>
+              <layout class="QVBoxLayout" >
+               <property name="spacing" >
+                <number>0</number>
+               </property>
+               <property name="leftMargin" >
+                <number>30</number>
+               </property>
+               <property name="topMargin" >
+                <number>0</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QGridLayout" >
+                 <property name="verticalSpacing" >
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0" >
+                  <widget class="QRadioButton" name="authority_automatic" >
+                   <property name="text" >
+                    <string>automatic</string>
+                   </property>
+                   <property name="checked" >
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0" >
+                  <widget class="QRadioButton" name="authority_manual" >
+                   <property name="text" >
+                    <string>manual:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1" >
+                  <widget class="QLineEdit" name="authority" >
+                   <property name="enabled" >
+                    <bool>false</bool>
+                   </property>
+                   <property name="text" >
+                    <string>unknown</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>328</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTreeWidget" name="result" >
+         <property name="toolTip" >
+          <string>This table will show the answers from the DCHK-server</string>
+         </property>
+         <property name="midLineWidth" >
+          <number>1</number>
+         </property>
+         <property name="alternatingRowColors" >
+          <bool>true</bool>
+         </property>
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
+         </property>
+         <column>
+          <property name="text" >
+           <string>Domain</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Status</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Timestamp</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <property name="geometry" >
+       <rect>
+        <x>180</x>
+        <y>199</y>
+        <width>1192</width>
+        <height>833</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Request-Packet</string>
+      </attribute>
+      <attribute name="icon" >
+       <iconset resource="res.qrc" >
+        <normaloff>:/icons/resources/out.png</normaloff>:/icons/resources/out.png</iconset>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>200</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+         <property name="title" >
+          <string>LWZ Payload Request Descriptor</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <item>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_15" >
+              <property name="text" >
+               <string>Payload Header:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="QLabel" name="req_payload_header" >
+              <property name="minimumSize" >
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_22" >
+              <property name="text" >
+               <string>Packet Size:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="QLabel" name="req_packet_size" >
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" >
+             <widget class="QLabel" name="label_16" >
+              <property name="text" >
+               <string>Transaction ID:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QLabel" name="req_transactionId" >
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" >
+             <widget class="QLabel" name="label_17" >
+              <property name="text" >
+               <string>Maximum Response Length:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" >
+             <widget class="QLabel" name="req_maxRespLength" >
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" >
+             <widget class="QLabel" name="label_18" >
+              <property name="text" >
+               <string>Authority Length:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" >
+             <widget class="QLabel" name="req_authorityLength" >
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0" >
+             <widget class="QLabel" name="label_19" >
+              <property name="text" >
+               <string>Authority:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1" >
+             <widget class="QLabel" name="req_authority" >
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" >
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QGridLayout" >
+              <item row="0" column="0" >
+               <widget class="QLabel" name="label_26" >
+                <property name="text" >
+                 <string>Version:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" >
+               <widget class="QLabel" name="req_version" >
+                <property name="minimumSize" >
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QLabel" name="label_30" >
+                <property name="text" >
+                 <string>Compressed:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" >
+               <widget class="QLabel" name="req_compressed" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" >
+               <widget class="QLabel" name="label_31" >
+                <property name="text" >
+                 <string>Accept Compression:</string>
+                </property>
+               </widget>
+              </item>
+              <item rowspan="2" row="2" column="1" >
+               <widget class="QLabel" name="req_accept_compression" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item rowspan="2" row="3" column="0" >
+               <widget class="QLabel" name="label_32" >
+                <property name="text" >
+                 <string>Payload-Type:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" >
+               <widget class="QLabel" name="req_payloadtype" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTextBrowser" name="req_packet" >
+            <property name="font" >
+             <font>
+              <family>Courier</family>
+              <stylestrategy>PreferDefault</stylestrategy>
+             </font>
+            </property>
+            <property name="horizontalScrollBarPolicy" >
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="lineWrapMode" >
+             <enum>QTextEdit::NoWrap</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_23" >
+         <property name="text" >
+          <string>Payload:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextBrowser" name="request" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4" >
+      <property name="geometry" >
+       <rect>
+        <x>202</x>
+        <y>221</y>
+        <width>1192</width>
+        <height>833</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Answer Packet</string>
+      </attribute>
+      <attribute name="icon" >
+       <iconset resource="res.qrc" >
+        <normaloff>:/icons/resources/in.png</normaloff>:/icons/resources/in.png</iconset>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="groupBox_3" >
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>200</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+         <property name="title" >
+          <string>LWZ Payload Request Descriptor</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <item>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QGridLayout" >
+              <item row="0" column="0" >
+               <widget class="QLabel" name="label_20" >
+                <property name="text" >
+                 <string>Payload Header:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" >
+               <widget class="QLabel" name="resp_payload_header" >
+                <property name="minimumSize" >
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QLabel" name="label_24" >
+                <property name="text" >
+                 <string>Packet Size:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" >
+               <widget class="QLabel" name="resp_packet_size" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" >
+               <widget class="QLabel" name="label_21" >
+                <property name="text" >
+                 <string>Transaction ID:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1" >
+               <widget class="QLabel" name="resp_transactionId" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QGridLayout" >
+              <item row="0" column="0" >
+               <widget class="QLabel" name="label_25" >
+                <property name="text" >
+                 <string>Version:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" >
+               <widget class="QLabel" name="resp_version" >
+                <property name="minimumSize" >
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QLabel" name="label_27" >
+                <property name="text" >
+                 <string>Compressed:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" >
+               <widget class="QLabel" name="resp_compressed" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" >
+               <widget class="QLabel" name="label_28" >
+                <property name="text" >
+                 <string>Accept Compression:</string>
+                </property>
+               </widget>
+              </item>
+              <item rowspan="2" row="2" column="1" >
+               <widget class="QLabel" name="resp_accept_compression" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item rowspan="2" row="3" column="0" >
+               <widget class="QLabel" name="label_29" >
+                <property name="text" >
+                 <string>Payload-Type:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" >
+               <widget class="QLabel" name="resp_payloadtype" >
+                <property name="frameShape" >
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow" >
+                 <enum>QFrame::Sunken</enum>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTextBrowser" name="resp_packet" >
+            <property name="font" >
+             <font>
+              <family>Courier</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="lineWrapMode" >
+             <enum>QTextEdit::NoWrap</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextBrowser" name="answer" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>797</width>
+        <height>520</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>About</string>
+      </attribute>
+      <attribute name="icon" >
+       <iconset resource="res.qrc" >
+        <normaloff>:/icons/resources/documentinfo.png</normaloff>:/icons/resources/documentinfo.png</iconset>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QGridLayout" >
+         <item row="1" column="0" >
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QTextBrowser" name="textBrowser" >
+           <property name="minimumSize" >
+            <size>
+             <width>500</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="html" >
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:12pt; font-weight:600;">Copyright (c) 2008/2009 Patrick Fedick&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free SoftwareFoundation; either version 3 of the License, or (at your option) any later version.&lt;/span>&lt;/p>
+&lt;p align="justify" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.&lt;/span>&lt;/p>
+&lt;p align="justify" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">You should have received a copy of the GNU Lesser General Public License along with this program; if not, see &amp;lt;http://www.gnu.org/licenses/&amp;gt;.&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;hr />
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:12pt; font-weight:600;">CREDITS&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt; font-weight:600;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">This software uses the following 3rd party libraries and routines:&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">  - dchk Library (http://dchk.sourceforge.net)&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (c) 2008 Patrick Fedick&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">  - Zlib (http://www.zlib.net/)&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (C) 1995-2005 Jean-loup Gailly and Mark Adler&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">  - libxml2 (http://xmlsoft.org/)&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved.&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">  - random number generator&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (c) 1983, 1993 The Regents of the University of California&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">  - resolver functions from bind9&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;">&lt;span style=" font-family:'Sans Serif'; font-size:9pt;">    Copyright (c) 1996,1999 by Internet Software Consortium.&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3" >
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1" >
+          <layout class="QHBoxLayout" >
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" >
+             <item>
+              <widget class="QLabel" name="about_name" >
+               <property name="font" >
+                <font>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+               <property name="pixmap" >
+                <pixmap/>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="about_version" >
+               <property name="text" >
+                <string>Version: 1.0.0</string>
+               </property>
+               <property name="scaledContents" >
+                <bool>false</bool>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_10" >
+               <property name="text" >
+                <string>Author</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_11" >
+               <property name="font" >
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Patrick Fedick &lt;dchk@pfp.de></string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType" >
+              <enum>QSizePolicy::Expanding</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="3" >
+          <widget class="QLabel" name="label_6" >
+           <property name="text" >
+            <string/>
+           </property>
+           <property name="pixmap" >
+            <pixmap resource="res.qrc" >:/images/resources/logo.png</pixmap>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources>
+  <include location="res.qrc" />
+ </resources>
+ <connections/>
+</ui>

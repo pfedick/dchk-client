@@ -1,0 +1,192 @@
+##############################################################################
+# This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+# (http://www.pfp.de/). It can be used to query domain status by the new
+# DCHK protocol (see http://tools.ietf.org/html/rfc5144).
+#
+# $Author: pfedick $
+# $Revision: 1.3 $
+# $Date: 2009/08/07 07:00:52 $
+# $Id: Makefile.in,v 1.3 2009/08/07 07:00:52 pfedick Exp $
+#
+# 
+# Copyright (C) 2008/2009 Patrick Fedick
+# 
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# SoftwareFoundation; either version 3 of the License, or (at your option) any
+# later version.
+# 
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+# more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+CC		= @CC@
+CXX		= @CXX@
+prefix	= @prefix@
+CFLAGS		=  -Wall -Iinclude -I${incdir} @CFLAGS@ @DEFS@  @XML_CPPFLAGS@
+CPPFLAGS	= @CPPFLAGS@
+LDFLAGS		= @LDFLAGS@
+LIBS		= @LIBS@ @XML_LIBS@
+
+PROGRAM=dchk@EXEEXT@
+PROGRAMDEBUG=dchk-debug@EXEEXT@
+
+QDCHK=qdchk@EXEEXT@
+QDCHKDEBUG=qdchk-debug@EXEEXT@
+
+LIBNAME=libdchk.a
+LIBNAMEDEBUG=libdchk-debug.a
+
+CLIENT_RELEASE=release/main.o release/ns_parse.o release/random.o release/dchk.o \
+	release/irislwz.o release/compat.o release/errors.o release/xmlparser.o \
+	release/resolver.o release/socketerrors.o
+
+LIB_RELEASE=release/ns_parse.o release/irislwz.o release/compat.o release/dchk.o \
+	release/random.o release/errors.o release/xmlparser.o release/resolver.o \
+	release/CDchk.o release/CIrisLWZ.o release/socketerrors.o
+
+CLIENT_DEBUG=debug/main.o debug/ns_parse.o debug/random.o debug/dchk.o \
+	debug/irislwz.o debug/compat.o debug/errors.o debug/xmlparser.o \
+	debug/resolver.o debug/socketerrors.o
+
+LIB_DEBUG=debug/ns_parse.o debug/irislwz.o debug/compat.o debug/dchk.o \
+	debug/random.o debug/errors.o debug/xmlparser.o debug/resolver.o \
+	debug/CDchk.o debug/CIrisLWZ.o debug/socketerrors.o
+
+
+
+release: release/$(PROGRAM) release/$(LIBNAME)
+
+debug: debug/$(PROGRAM) debug/$(LIBNAMEDEBUG)
+
+all: install install_debug
+
+
+release/$(PROGRAM): Makefile $(CLIENT_RELEASE) include/config.h include/dchk.h
+	$(CC) -O2 $(CFLAGS) -o release/$(PROGRAM) $(CLIENT_RELEASE)  $(LIBS)
+	-strip release/$(PROGRAM)
+
+release/$(LIBNAME): Makefile $(LIB_RELEASE) include/config.h include/dchk.h
+	ar -r release/$(LIBNAME) $(LIB_RELEASE)
+
+debug/$(PROGRAM): Makefile $(CLIENT_DEBUG) include/config.h include/dchk.h
+	$(CC) -O -ggdb $(CFLAGS) -o debug/$(PROGRAM) $(CLIENT_DEBUG)  $(LIBS)
+
+debug/$(LIBNAMEDEBUG): Makefile $(LIB_DEBUG) include/config.h include/dchk.h
+	ar -r debug/$(LIBNAMEDEBUG) $(LIB_DEBUG)
+
+clean:
+	-rm -rf release debug documentation gui/release gui/debug gui/qdchk
+	-if test -f gui/Makefile && ! -z "@MyQtMAKE@" ; then cd gui; @MyQtMAKE@ clean; fi
+	
+install: release/$(PROGRAM) release/$(LIBNAME)
+	-cp release/$(LIBNAME) $(prefix)/lib
+	-cp include/dchk.h $(prefix)/include
+	-cp release/$(PROGRAM) $(prefix)/bin
+	-if test -f gui/$(QDCHK) ; then cp gui/$(QDCHK) $(prefix)/bin; fi
+	-if test -f gui/release/$(QDCHK) ; then cp gui/release/$(QDCHK) $(prefix)/bin; fi
+
+install_debug: debug/$(PROGRAM) debug/$(LIBNAMEDEBUG)
+	-cp debug/$(LIBNAMEDEBUG) $(prefix)/lib
+	-cp include/dchk.h $(prefix)/include
+	-cp debug/$(PROGRAM) $(prefix)/bin/$(PROGRAMDEBUG)
+	-if test -f gui/$(QDCHKDEBUG) ; then cp gui/$(QDCHKDEBUG) $(prefix)/bin; fi
+	-if test -f gui/release/$(QDCHKDEBUG) ; then cp gui/release/$(QDCHKDEBUG) $(prefix)/bin; fi
+
+docs:
+	-doxygen Doxyfile
+	-cp src/docs/dchk-logo.png documentation/html
+#	-cd documentation/latex; make; cp refman.pdf ../manual.pdf
+
+gui: Makefile src/gui/qdchk.pro
+	if test -z "@QMAKE@" ; then echo "No Qt4 found"; exit; fi
+	cd src/gui; @QMAKE@
+	cd src/gui; @MyQtMAKE@ release
+
+release/dir.created:
+	@-if test ! -d release; then mkdir release; fi
+	@touch release/dir.created 
+
+debug/dir.created:
+	@-if test ! -d debug; then mkdir debug; fi
+	@touch debug/dir.created
+
+release/main.o: src/cli/main.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/main.o -c src/cli/main.c
+
+release/irislwz.o: src/lib/irislwz.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/irislwz.o -c src/lib/irislwz.c
+
+release/dchk.o: src/lib/dchk.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/dchk.o -c src/lib/dchk.c
+
+release/random.o: src/lib/random.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/random.o -c src/lib/random.c
+
+release/compat.o: src/lib/compat.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/compat.o -c src/lib/compat.c
+	
+release/errors.o: src/lib/errors.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/errors.o -c src/lib/errors.c
+
+release/resolver.o: src/lib/resolver.c Makefile include/config.h include/dchk.h include/ns_parse.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/resolver.o -c src/lib/resolver.c
+
+release/xmlparser.o: src/lib/xmlparser.c Makefile include/config.h include/dchk.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/xmlparser.o -c src/lib/xmlparser.c
+	
+release/CIrisLWZ.o: src/lib/CIrisLWZ.cpp Makefile include/config.h include/dchk.h release/dir.created
+	$(CXX) -O2 $(CFLAGS) -o release/CIrisLWZ.o -c src/lib/CIrisLWZ.cpp
+
+release/CDchk.o: src/lib/CDchk.cpp Makefile include/config.h include/dchk.h include/ns_parse.h release/dir.created
+	$(CXX) -O2 $(CFLAGS) -o release/CDchk.o -c src/lib/CDchk.cpp
+
+release/ns_parse.o: src/lib/ns_parse.c Makefile include/config.h include/dchk.h include/ns_parse.h release/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/ns_parse.o -c src/lib/ns_parse.c
+
+release/socketerrors.o: src/lib/socketerrors.c Makefile include/config.h include/dchk.h include/compat.h debug/dir.created
+	$(CC) -O2 $(CFLAGS) -o release/socketerrors.o -c src/lib/socketerrors.c
+	
+	
+debug/main.o: src/cli/main.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/main.o -c src/cli/main.c
+
+debug/irislwz.o: src/lib/irislwz.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/irislwz.o -c src/lib/irislwz.c
+
+debug/dchk.o: src/lib/dchk.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/dchk.o -c src/lib/dchk.c
+
+debug/random.o: src/lib/random.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/random.o -c src/lib/random.c
+
+debug/compat.o: src/lib/compat.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/compat.o -c src/lib/compat.c
+	
+debug/errors.o: src/lib/errors.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/errors.o -c src/lib/errors.c
+
+debug/resolver.o: src/lib/resolver.c Makefile include/config.h include/dchk.h include/ns_parse.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/resolver.o -c src/lib/resolver.c
+
+debug/xmlparser.o: src/lib/xmlparser.c Makefile include/config.h include/dchk.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/xmlparser.o -c src/lib/xmlparser.c
+	
+debug/CIrisLWZ.o: src/lib/CIrisLWZ.cpp Makefile include/config.h include/dchk.h debug/dir.created
+	$(CXX) -O -ggdb $(CFLAGS) -o debug/CIrisLWZ.o -c src/lib/CIrisLWZ.cpp
+
+debug/CDchk.o: src/lib/CDchk.cpp Makefile include/config.h include/dchk.h include/ns_parse.h debug/dir.created
+	$(CXX) -O -ggdb $(CFLAGS) -o debug/CDchk.o -c src/lib/CDchk.cpp
+
+debug/ns_parse.o: src/lib/ns_parse.c Makefile include/config.h include/dchk.h include/ns_parse.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/ns_parse.o -c src/lib/ns_parse.c
+	
+debug/socketerrors.o: src/lib/socketerrors.c Makefile include/config.h include/dchk.h include/compat.h debug/dir.created
+	$(CC) -O -ggdb $(CFLAGS) -o debug/socketerrors.o -c src/lib/socketerrors.c
+
+	

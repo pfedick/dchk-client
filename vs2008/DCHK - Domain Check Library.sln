@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DCHK - Domain Check Library", "DCHK - Domain Check Library.vcproj", "{5B53EE81-564D-4CAB-90D3-5BB36276F68D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DCHK - Domain Check Client", "DCHK - Domain Check Client.vcproj", "{1DFF48D2-8E8C-403D-A422-458E96E5E868}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Minimal|Win32 = Minimal|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Debug|Win32.Build.0 = Debug|Win32
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Minimal|Win32.ActiveCfg = Release|Win32
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Minimal|Win32.Build.0 = Release|Win32
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Release|Win32.ActiveCfg = Release|Win32
+		{5B53EE81-564D-4CAB-90D3-5BB36276F68D}.Release|Win32.Build.0 = Release|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Debug|Win32.Build.0 = Debug|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Minimal|Win32.ActiveCfg = Release|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Minimal|Win32.Build.0 = Release|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Release|Win32.ActiveCfg = Release|Win32
+		{1DFF48D2-8E8C-403D-A422-458E96E5E868}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

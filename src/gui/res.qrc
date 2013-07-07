@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/icons" >
+        <file>resources/button_cancel.png</file>
+        <file>resources/button_ok.png</file>
+        <file>resources/database.png</file>
+        <file>resources/documentinfo.png</file>
+        <file>resources/find.png</file>
+        <file>resources/in.png</file>
+        <file>resources/out.png</file>
+    </qresource>
+    <qresource prefix="/images" >
+        <file>resources/icon32.png</file>
+        <file>resources/icon64.png</file>
+        <file>resources/logo.png</file>
+    </qresource>
+</RCC>
