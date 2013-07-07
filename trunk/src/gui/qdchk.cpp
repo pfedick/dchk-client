@@ -46,7 +46,7 @@ void HexDump(QString &target, char *address, size_t bytes)
     char *_adresse=(char*)address;
     int spalte=0;
     size_t i=0;
-    sprintf (buff,"0x%08X: ",i);
+    sprintf (buff,"0x%08zX: ",i);
     memset(cleartext,0,20);
     for (i=0;i<bytes;i++) {
         if (spalte>15) {
@@ -56,7 +56,7 @@ void HexDump(QString &target, char *address, size_t bytes)
             strcat (buff,cleartext);
             target+=buff;
             target+="\n";
-            sprintf (buff,"0x%08X: ",i);
+            sprintf (buff,"0x%08zX: ",i);
             memset(cleartext,0,20);
             spalte=0;
         }
