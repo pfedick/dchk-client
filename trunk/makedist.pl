@@ -42,7 +42,7 @@ if (($TAG =~ /^SNAP_(.*)$/)) {
 
 my $DISTNAME="dchk-$VERSION";
 
-print "Packe DCHK mit dem Tag \"$TAG\" aus dem CVS aus...\n";
+print "Packe DCHK mit dem Tag \"$TAG\" aus dem SVN aus...\n";
 print "Version:  $VERSION\n";
 print "Distname: $DISTNAME\n";
 
