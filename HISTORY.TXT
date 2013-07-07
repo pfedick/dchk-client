@@ -3,6 +3,7 @@
 Version 0.5.8
   - Decompression-Buffer is dynamicaly increased 5 times when the
     initially calculated space is not big enough.
+  - Moved sourcecode to SVN
 
 Version 0.5.7, Release date: 04.08.2010		(CVS-Tag: REL_0_5_7)
   - Removed -lstdc++ from LIBS in Makefile. The CLI is plain C, so we
