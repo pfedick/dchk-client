@@ -1,0 +1,84 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pfedick $
+ * $Revision: 1.2 $
+ * $Date: 2009/03/12 11:56:19 $
+ * $Id: gui.dox,v 1.2 2009/03/12 11:56:19 pfedick Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+ 
+/*!\page DCHK_gui DCHK GUI - a graphical user interface
+A graphical user interface is included in this distribution. Please see the
+\ref dchk_install3 "installation guide" if you want to compile the GUI by yourself.
+When you start the GUI, you will find a window with four tabs:
+- \ref DCHK_gui_query
+- \ref DCHK_gui_request
+- \ref DCHK_gui_response
+- About Page
+
+\section DCHK_gui_query Query Page
+The Query Page is the main page where you enter your domains, start the query and see the results
+\image html  gui1-web.png
+\image latex gui1-tex.png  "GUI main page" width=10cm
+-# In the text area, you can enter the domain names you want to check. Enter one domain per line.
+-# In the upper part of the options area, you can select if you want to use DNS to find a suitable DCHK server for your domains,
+   or enter hostname and port of a DCHK server manually. If you choose DNS, the TLD of the first domain
+   in the list is used to find a server.
+-# In the middle part of the options area, you can specify the maximum size for response packets. This should be 1500 if the MTU size
+   is unknown, but can go up to 4000 Bytes. You can also set a timeout (duration in seconds the client waits for a response) or
+   specify if you want to use compression
+-# In the lower part of the options area, you can specify an authority name. In most cases you
+   should use the "automatic" option, which means the name is generated automatically by using
+   the TLD of the first domain in your query.
+-# Press the start button when you are ready to query your domains
+-# In the lower part you will find a table with the result of your domain queries. Next to the name you will find the status and
+   a timestamp of the last database update. 
+   
+The following table explains the meaning of the status keyword and compares it with the output of the german whois:
+<table border="1" cellspacing="0" cellpadding="3" id="content">
+<tr><th>Status DCHK</th><th>Description</th><th>Status whois</th></tr>
+<tr><td>active</td><td>the domain is registered and connected</td><td>connect</td></tr>
+<tr><td>inactive</td><td>the domain is registered but not connected (no DNS entries)</td><td>failed</td></tr>
+<tr><td>reserved</td><td>the domain is reserved and is not available for registration under normal registration procedures</td><td>not used</td></tr>
+<tr><td>free</td><td>the domain is free and can be registered. "free" is not a status defined in RFC 5144, it's a
+translation from the client from the error message "nameNotFound" described in RFC 3981, chapter 4.2.
+</td><td>free</td></tr>
+<tr><td>invalid</td><td>the domain name is not valid and cannot be registered. Again, this is
+not a status defined in RFC 5144, it's a translation of the client from the error message
+"invalidName" described in RFC 3981, chapter 4.2.
+</td><td>invalid or blocked</td></tr>
+</table>
+
+
+\section DCHK_gui_request Request Page
+The Request Page shows you details of the packet sent to the server. It is meant for informational or debug use.
+\image html  gui2-web.png
+\image latex gui2-tex.png  "GUI Request packet" width=10cm
+
+\section DCHK_gui_response Response Page
+The Response Page shows you details of the answer packet received from the server. It is meant for informational or debug use.
+\image html  gui3-web.png
+\image latex gui3-tex.png  "GUI Response packet" width=10cm
+
+
+*/

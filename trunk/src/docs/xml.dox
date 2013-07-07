@@ -1,0 +1,378 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pfedick $
+ * $Revision: 1.2 $
+ * $Date: 2009/03/12 11:56:19 $
+ * $Id: xml.dox,v 1.2 2009/03/12 11:56:19 pfedick Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+ 
+/*!\page DCHK_xml_examples XML-Examples
+
+On this page you will find a few examples of XML requests and the servers responses.
+For better reading the xml code was broken in several lines and indented. In real there is no indention or line breaks to
+save space. 
+
+If you plan to validate the XML code, you will find the XML-scheme here: http://www.iana.org/assignments/xml-registry/schema/dchk1.xsd
+
+
+\section DCHK_xml_examples_version Version response
+To query the version of the server, you will set the payload type in the IRISLWZ-Header to "01" and keep the payload empty. When using
+this client, you can use the keyword "version" instead of a domain name.
+
+The Servers Answer looks like this:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<versions xmlns="urn:ietf:params:xml:ns:iris-transport">
+  <transferProtocol protocolId="iris.lwz">
+    <application protocolId="urn:ietf:params:xml:ns:iris1">
+      <dataModel protocolId="urn:ietf:params:xml:ns:dchk1"/>
+    </application>
+  </transferProtocol>
+</versions>
+\endcode
+
+\section DCHK_xml_examples_active Query a single existing domain
+The following example shows a query for the domain "denic.de".
+
+Request:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="denic.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       registryType="dchk1" entityClass="domain-name" entityName="denic.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>denic.de</urn:domainName>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-06-13T09:30:01+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_free Query of a single free domain
+Request:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name"
+     entityName="this-domain-was-free-when-i-made-this-documentation.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:nameNotFound/>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_idn Query of a single IDN
+When using IDN names (domains with country specific special characters), you have to use "idn" as entityClass instead of
+"domain-name".
+Request:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="idn" entityName="täst.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      registryType="dchk1" entityClass="idn" entityName="täst.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>xn--tst-qla.de</urn:domainName>
+        <urn:idn>täst.de</urn:idn>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-06-13T09:35:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+
+\endcode
+
+\section DCHK_xml_examples_reserved Query of a reserved domain
+The german registry does not know reserved domains. But if, it would look like this:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="mtk.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      registryType="dchk1" entityClass="domain-name" entityName="mtk.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>mtk.de</urn:domainName>
+        <urn:status>
+          <urn:reserved/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-06-13T09:35:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_invalid Query an invalid domain
+We query a domain with invalid letters:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="invalid#domain.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:invalidName/>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_failed query a "failed" domain
+A registered domain, which has no DNS entries, is called a "failed" domain in the german whois. DCHK will respond with
+"inactive":
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="inactive-domain.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       registryType="dchk1" entityClass="idn" entityName="inactive-domain.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>inactive-domain.de</urn:domainName>
+        <urn:status>
+          <urn:inactive/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-04-24T09:55:01+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_enum Query an ENUM-Domain
+The german registry DENIC is also responsible for the german ENUM domains, therefore you can use
+DCHK to query the status of ENUM domain, too.
+\code
+<source lang="xml">
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="1.5.3.2.7.2.9.6.9.4.e164.arpa"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       registryType="dchk1" entityClass="domain-name" entityName="1.5.3.2.7.2.9.6.9.4.e164.arpa" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>1.5.3.2.7.2.9.6.9.4.e164.arpa</urn:domainName>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-04-25T08:30:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_blocked Query a blocked ENUM-domain
+The ENUM number "1.5.3.2.7.2.9.6.9.4.e164.arpa" is already registered, therefore you cannot register
+numbers above or below this number.
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="1.1.5.3.2.7.2.9.6.9.4.e164.arpa"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:invalidName/>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_blacklist Query a blacklisted ENUM-domain
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="0.1.1.3.6.1.9.4.e164.arpa"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:invalidName/>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_bundled Query several domains in one request
+Request:
+\code
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="denic.de"/>
+  </iris1:searchSet>
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="eine-freie-domain.de"/>
+  </iris1:searchSet>
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name" entityName="test.de"/>
+  </iris1:searchSet>
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="idn" entityName="blöde+domain.de"/>
+  </iris1:searchSet>
+</iris1:request>
+\endcode
+
+Response:
+\code
+<iris1:response xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       registryType="dchk1" entityClass="domain-name" entityName="denic.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>denic.de</urn:domainName>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-04-24T11:45:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:nameNotFound/>
+  </iris1:resultSet>
+  <iris1:resultSet>
+    <iris1:answer>
+      <urn:domain xmlns:urn="urn:ietf:params:xml:ns:dchk1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       registryType="dchk1" entityClass="domain-name" entityName="test.de" authority="de" xsi:type="urn:domainType">
+        <urn:domainName>test.de</urn:domainName>
+        <urn:status>
+          <urn:active/>
+        </urn:status>
+        <urn:lastDatabaseUpdateDateTime>2008-04-24T11:45:00+02:00</urn:lastDatabaseUpdateDateTime>
+      </urn:domain>
+    </iris1:answer>
+  </iris1:resultSet>
+  <iris1:resultSet>
+    <iris1:answer/>
+    <iris1:invalidName/>
+  </iris1:resultSet>
+</iris1:response>
+\endcode
+
+\section DCHK_xml_examples_size Answer is to big to fit in the allowed response size
+If the answer does not fit in the allowed response size, the server will respond with a  "Size Information":
+\code
+<size xmlns="urn:ietf:params:xml:ns:iris-transport">
+  <response>
+    <octets>1541</octets>
+  </response>
+</size>
+\endcode
+The client could increase the packet size, allow compressed answers or split the request in several smaler requests.
+
+\section DCHK_xml_examples_other Internal Server Error
+If the server encounters an error, it will respond with "other information" (payload type in the IRISLWZ
+header is set to "11"):
+\code
+<other xmlns="urn:ietf:params:xml:ns:iris-transport" type="system-error">
+  <description language="en">Service encounters internal error</description>
+</other>
+\endcode
+
+\section DCHK_xml_examples_other Other Errors
+If you send an invalid request, the server also answers with "other information":
+\code
+<?xml version="1.0" encoding="UTF-8"?>
+<other xmlns="urn:ietf:params:xml:ns:iris-transport" type="authority-error">
+  <description language="en">Receiver does not serve intended authority "fr"</description>
+</other>
+\endcode
+*/

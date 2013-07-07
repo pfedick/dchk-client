@@ -1,0 +1,225 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pafe $
+ * $Revision: 1.6 $
+ * $Date: 2009/03/19 18:38:49 $
+ * $Id: installation.dox,v 1.6 2009/03/19 18:38:49 pafe Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+/*!\page DCHK_installation Download and Installation
+
+\section dchk_download Download
+There are two ways to get the sourcecode:
+\subsection dchk_download_release Download a release
+You can download an official release from http://dchk.sourceforge.net/. This is usually a ".tar.gz" or ".zip"-file, which
+contain the sources. There is also an installer for Microsoft Windows, which contains precompiled binaries as well as the sources and
+documentation.
+
+\subsection dchk_download_cvs Download from CVS
+You can check out the source code from our CVS repository at sourceforge.net through anonymous (pserver) CVS
+with the following instruction set. When prompted for a password for anonymous, simply press the Enter key.
+Please keep in mind, that the files in the CVS repository can be newer than the ones in the latest release and
+even unstable.
+\code
+cvs -d:pserver:anonymous@dchk.cvs.sourceforge.net:/cvsroot/dchk login
+
+cvs -z3 -d:pserver:anonymous@dchk.cvs.sourceforge.net:/cvsroot/dchk co -P client 
+\endcode
+You can find more information here: http://sourceforge.net/cvs/?group_id=239063 
+
+\section dchk_requirements Requirements
+DCHK needs the following packages / libraries:
+  - <b>Zlib</b>\n
+    A free compression library, see: http://www.zlib.net/
+    You should have Version 1.2.3 or higher
+  - <b>libxml2</b>\n
+    a XML parser library, see: http://xmlsoft.org/
+    Version 2.6.10 or higher is required
+  - <b>gcc</b>\n
+    version 3.4 or higher with the following libs:
+      - libgcc
+      - gcc-c++
+      - libstdc++
+      - libstdc++-devel
+      .
+    See: http://gcc.gnu.org/
+
+If you want to compile the GUI, you will need QT Version 4.3.3 or above from
+<a href="http://www.trolltech.org">Trolltech</a>.
+
+\section dchk_platforms Platforms
+So far, the dchk library and client was successfully compiled and tested on the following
+systems:
+
+<table id="content" border="1" cellspacing="0" cellpadding="3">
+<tr><th>Hardware</th><th>OS</th><th>Remarks</th></tr>
+<tr><td>AMD/Intel 32Bit</td><td>Windows XP SP2</td><td>Compiled with MinGW. It does not run on Windows 2000,
+you will get an error message that "freeaddrinfo" is not found in WS2_32.dll.</td></tr>
+<tr><td>AMD/Intel 32Bit</td><td>Fedora Core 5-8</td><td>-</td></tr>
+<tr><td>AMD/Intel 64Bit</td><td>Fedora Core 5</td><td>Should work on other Versions, too</td></tr>
+<tr><td>AMD/Intel 32Bit</td><td>FreeBSD 7</td><td>Should also work on older versions</td></tr>
+<tr><td>AMD/Intel 64Bit</td><td>Debian</td><td>-</td></tr>
+<tr><td>AMD/Intel 32/64Bit</td><td>Ubuntu</td><td>-</td></tr>
+<tr><td>Sun Sparc</td><td>Solaris 9</td><td>-Setting of timeout does not work. If you get the
+error message <tt>"ERROR 74033: Setting of socket timeout failed [errno=99: Option not supported by protocol]"</tt>,
+try to use parameter <tt>"--timeout 0"</tt>
+</td></tr>
+
+</table>
+
+\section dchk_install1 Installation UNIX
+First, unpack the source distribution:
+\code
+tar -xzf dchk-1.0.0.tar.gz
+\endcode
+Then change into the newly created sub directory dchk-1.0.0
+\code
+cd dchk-1.0.0
+\endcode
+
+DCHK comes with a <a href="http://www.gnu.org/software/autoconf/">GNU Autoconf</a> configure-script. In most
+cases it will be sufficient, if you simply type "configure" without any options.
+\code
+./configure
+make
+make install
+\endcode
+
+If configure can't find something, you have to add a few optional parameter, the path to libxml or zlib
+for example:
+\code
+./configure --with-zlib=/usr/local --with-xml-prefix=/usr/local
+\endcode
+
+By default the library and client will be installed under <tt>/usr/local</tt>. If you want to install in
+a different path, use <tt>--prefix=PATH</tt> as another option:
+
+\code
+./configure --prefix=/home/patrick --with-zlib=/usr/local --with-xml-prefix=/usr/local
+\endcode
+
+After installation, you will find the following files:
+<table border="1" cellspacing="0" cellpadding="3" id="content">
+<tr><td>$PREFIX/bin/dchk</td><td>the DCHK client</td></tr>
+<tr><td>$PREFIX/lib/libdchk.a</td><td>the static library</td></tr>
+<tr><td>$PREFIX/include/dchk.h</td><td>the header file</td></tr>
+</table>
+<tt>$PREFIX</tt> is either <tt>/usr/local</tt> or whatever prefix you defined in the configure process.
+
+
+\subsection dchk_install1_debug Debug version
+By default the Makefile will produce a "release" version, which is compiled with optimization flags
+and without any debug information. But you can also build a "debug" version:
+- <tt>make debug</tt> will build the debug version
+- <tt>make install_debug</tt> will install the debug version
+     
+Please note that the names are slightly different in this version:
+<table border="1" cellspacing="0" cellpadding="3" id="content">
+<tr><td>$PREFIX/bin/dchk-debug</td><td>the DCHK client</td></tr>
+<tr><td>$PREFIX/lib/libdchk-debug.a</td><td>the static library with debug informations</td></tr>
+<tr><td>$PREFIX/include/dchk.h</td><td>the header file</td></tr>
+</table>
+<tt>$PREFIX</tt> is either <tt>/usr/local</tt> or whatever prefix you defined in the configure process.
+
+If you want to install both versions, you can simply type <tt>make all</tt>, which builds and installs everything.
+
+
+\section dchk_install2 Installation Microsoft Windows
+You need Windows 2000 or Windows XP to compile the DCHK library and client. Windows Vista could work, but I have
+no possibility to test it.
+
+\subsection dchk_install_win_vs Microsoft Visual Studio 2008 
+The DCHK-Library comes with Visual Studio 2008 project files for the library and the client. You can find them in the
+sub directory "vs2008". Please make sure that the required libraries are already installed and that your Visual Studio
+can find the include files and libraries.
+
+\subsection dchk_install_win_mingw MinGW
+You can compile the library and DCHK client with <a href="http://www.ingw.org">MinGW</a>.
+You need to install MingW, MSys and the required libraries first. Then open the MSys shell.
+Configuration and compilation is the same as for UNIX (\ref dchk_install1 "see above").
+
+\section dchk_install3 Installation Graphical User Interface (GUI)
+If you run the configure script described above, it will also tries to configure the GUI. This is experimental yet,
+so it may work or not. If it works, you can simply type <tt>make gui</tt> to build the GUI. If not, you have to do
+some manual work.
+
+You will find the source code of the GUI in the sub directory <tt>src_gui</tt>.
+Open the <tt>"qdchk.pro"</tt> file and edit the <b style="color: red">marked lines</b> to match your paths:
+
+<b>qdchk.pro:</b>
+<pre class="fragment">
+CONFIG += debug_and_release
+TEMPLATE = app
+INCLUDEPATH += app
+<b style="color: red">unix:INCLUDEPATH += /usr/local/include
+unix:QMAKE_CXXFLAGS +=  -I/usr/include/libxml2
+win32:INCLUDEPATH += c:/mingw/msys/1.0/local/include</b>
+
+QT += core \
+    gui
+HEADERS += qdchk.h \
+    qdchk.h
+SOURCES += main.cpp \
+    qdchk.cpp
+FORMS += qdchk.ui \
+    qdchk.ui
+RESOURCES += res.qrc \
+    res.qrc \
+    res.qrc
+RC_FILE = qdchk.rc
+CONFIG(debug, debug|release) {
+	TARGET = qdchk-debug
+	<b style="color: red">unix:LIBS +=  -lstdc++ -lresolv  -L/usr/lib -lxml2 -lz -lm -ldchk-debug</b>
+	win32:LIBS += -lstdc++ \
+    	<b style="color: red">-Lc:/mingw/msys/1.0/local/lib \ </b>
+    	-ldchk-debug \
+    	-lxml2 \
+    	-lws2_32 \
+    	-ldnsapi
+	
+} else {
+	TARGET = qdchk
+	<b style="color: red">unix:LIBS +=  -lstdc++ -lresolv  -L/usr/lib -lxml2 -lz -lm -ldchk-debug</b>
+	win32:LIBS += -lstdc++ \
+    	<b style="color: red">-Lc:/mingw/msys/1.0/local/lib \ </b>
+    	-ldchk \
+    	-lxml2 \
+    	-lws2_32 \
+    	-ldnsapi
+	
+}
+</pre>
+On some systems you need the "-lresolve", on others this will result in an error message like "cannot find -lresolv".
+Please try what works on your system.
+
+After that, type <tt>qmake</tt> or <tt>qmake-qt4</tt> or whatever it is called on your
+system. Please be careful: on some systems both files exists, but <tt>qmake</tt> ist
+linked to the old version 3 of Qt, which will not work for this program.
+
+If everything went fine, you should have a <tt>Makefile</tt> now. Type <tt>make release</tt>
+to build the release version. If you build with MinGW on windows, you should use "mingw32-make" instead of "make".
+On successful compilation, you should find a <tt>qdchk</tt>
+binary in the release directory.
+
+
+*/

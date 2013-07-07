@@ -1,0 +1,411 @@
+/*
+ * This file is part of the Domain CHecK Client (DCHK) from Patrick Fedick
+ * (http://dchk.sourceforge.net/). It can be used to check the availability
+ * of domains by using the DCHK protocol described in RFC 5144.
+ *
+ * $Author: pfedick $
+ * $Revision: 1.3 $
+ * $Date: 2009/03/12 11:56:19 $
+ * $Id: structs.dox,v 1.3 2009/03/12 11:56:19 pfedick Exp $
+ *
+ *
+ * Copyright (C) 2008/2009 Patrick Fedick <dchk@pfp.de>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * SoftwareFoundation; either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+ 
+/*!\defgroup DCHK_types Data Structures
+ * 
+ * This page describes the data structures used by the low level
+ * functions of the DCHK C-API.
+ */
+
+
+/*!\struct IRISLWZ_HANDLE
+ * \brief Basic data type for all DCHK C-API functions
+ * 
+ * Basic data type for all DCHK C-API functions. When you want to use one of the DCHK-API functions, you have to
+ * define a IRISLWZ_HANDLE object and initialize it (\ref irislwz_Init). At the end of your program (or when you
+ * don't need the object any longer) you have to de-initialize it (\ref irislwz_Exit).
+ * 
+ * \code
+ #include <dchk.h>
+ int main(int argc, char **argv)
+ {
+ 	IRISLWZ_HANDLE dchk;
+ 	if (!irislwz_Init(&dchk)) {
+ 	   printf ("Initialization of DCHK object failed!\n");
+ 	   return 1;
+ 	}
+ 	...
+ 	irislwz_Exit(&iris);
+ 	return 0;
+ }
+ \endcode
+ * \ingroup DCHK_types
+ */
+
+/*!\var IRISLWZ_HANDLE::errortext
+ * \brief Contains a pointer the additional error text of the last error
+ * 
+ * Contains a pointer the additional error text of the last error
+ */
+
+/*!\var IRISLWZ_HANDLE::authority
+ * \brief Pointer to the authority, which should be used in DCHK requests
+ * 
+ * Pointer to the authority, which should be used in DCHK requests. The default is
+ * to use no authority. In a DCHK query the authority should be set to the requested
+ * TLD by using the function irislwz_SetAuthority
+ */
+
+/*!\var IRISLWZ_HANDLE::server
+ * \brief Pointer to hostname or IP of DCHK server
+ * 
+ * Pointer to hostname or IP of DCHK server
+ */
+
+/*!\var IRISLWZ_HANDLE::port
+ * \brief Port number of DCHK server (defaults to 715)
+ * 
+ * Port number of DCHK server (defaults to 715)
+ */
+
+/*!\var IRISLWZ_HANDLE::error
+ * \brief last error code
+ * 
+ * last error code
+ */
+
+/*!\var IRISLWZ_HANDLE::initialized
+ * \brief Flag which is set, when structure was initialized with irislwz_Init
+ * 
+ * Flag which is set, when structure was initialized with irislwz_Init
+ */
+
+/*!\var IRISLWZ_HANDLE::socket
+ * \brief Holds structure with socket data used for DCHK connection
+ * 
+ * Holds a pointer to a structure with socket data used for DCHK connection.
+ * The contents of the structure itself is operation system dependent.
+ * It is automatically allocated when calling \ref irislwz_Init and 
+ * deallocated when calling \ref irislwz_Exit. 
+ */
+
+/*!\var IRISLWZ_HANDLE::acceptDeflated
+ * \brief Flag which indicates if we accept compressed answers or not
+ * 
+ * Flag which indicates if we accept compressed answers or not
+ */
+
+/*!\var IRISLWZ_HANDLE::sendDeflated
+ * \brief Flag which indicates if we should send compressed requests or not
+ * 
+ * Flag which indicates if we should send compressed requests or not
+ */
+
+/*!\var IRISLWZ_HANDLE::flag_si
+ * \brief Flag which indicates if we should set the SI-bit in requests
+ * 
+ * Flag which indicates if we should set the SI-bit in requests
+ */
+
+/*!\var IRISLWZ_HANDLE::flag_oi
+ * \brief Flag which indicates if we should set the OI-bit in requests
+ * 
+ * Flag which indicates if we should set the OI-bit in requests
+ */
+
+/*!\var IRISLWZ_HANDLE::maximumResponseLength
+ * \brief Holds the maximum number of bytes we accept in response packets.
+ * 
+ * Holds the maximum number of bytes we accept in response packets.
+ */
+
+/*!\var IRISLWZ_HANDLE::timeout_seconds
+ * \brief Number of seconds we wait until a timeout is generated
+ * 
+ * Number of seconds we wait until a timeout is generated. The default is 5 seconds.
+ */
+
+/*!\var IRISLWZ_HANDLE::timeout_useconds
+ * \brief Number of microseconds we wait until a timeout is generated
+ * 
+ * Number of microseconds we wait until a timeout is generated
+ */
+
+/*!\var IRISLWZ_HANDLE::request
+ * \brief Structure which holds the complete request
+ * 
+ * Structure which holds the complete request
+ */
+
+/*!\var IRISLWZ_HANDLE::response
+ * \brief Structure which holds the complete response
+ * 
+ * Structure which holds the complete response
+ */
+
+/*!\var IRISLWZ_HANDLE::localcharset
+ * \brief For future use. Currently this value always contains "UTF-8"
+ * 
+ * Currently this value always contains "UTF-8". It is used inside the XML parser for
+ * beautifying the output. The library currently supports UTF-8 only.
+ */
+
+/*!\var IRISLWZ_HANDLE::DebugHandler
+ * \brief Pointer to a function to which debug code is passed
+ * 
+ * Pointer to a function to which debug code is passed
+ */
+
+/*!\var IRISLWZ_HANDLE::debugdata
+ * \brief Private data which is passed to the debug callback function
+ * 
+ * Private data which is passed to the debug callback function
+ */
+
+/*!\var IRISLWZ_HANDLE::debuglevel
+ * \brief Level of debug output
+ * 
+ * Level of debug output
+ */
+
+/*!\var IRISLWZ_HANDLE::verboseflag
+ * \brief controls verbose information
+ * 
+ * This flag is a bit field, which controls various verbose output during the process:
+ * \code
+ * Bit 0: XML-Payload of Request is printed to STDOUT                    (Value:   1)
+ * Bit 1: XML-Payload of Request is "beautified" and printed to STDOUT   (Value:   2)
+ * Bit 2: IRISLWZ-Header of Request is explained to STDOUT               (Value:   4)
+ * Bit 3: XML-Payload of Response is printed to STDOUT                   (Value:   8)
+ * Bit 4: XML-Payload of Response is "beautified" and printed to STDOUT  (Value:  16)
+ * Bit 5: IRISLWZ-Header of Response is explained to STDOUT              (Value:  32)
+ * Bit 6: Use Debug-Handler instead of STDOUT                            (Value:  64)
+ * \endcode
+ * 
+ * Level of debug output
+ */
+
+// #################################################################################################################
+/*!\struct IRISLWZ_HEADER
+ * \brief Structure to hold a IRIS/LWZ payload request descriptor
+ * 
+ * The IRISLWZ_HEADER has as size of 6 Bytes and is used as payload request and answer descriptor
+ * in the communication with the DCHK-Server. In a request all fields are used, in an answer only header and
+ * transactionId.
+ * 
+ * \ingroup DCHK_types
+ */
+
+
+/*!\var IRISLWZ_HEADER::header
+ * \brief Payload Header
+ * 
+The bits of the payload header are ordered according to <a href="http://tools.ietf.org/html/rfc1166">RFC 1166</a>,
+where bit 0 is the most significant and bit 7 is the least significant.  Each bit in the one octet payload header
+has the following meaning:
+
+<table id="content" border="1" cellspacing="0" cellpadding="2">
+<tr><th>Bits</th><th>Mask</th><th>Description</th></tr>
+<tr><td>0+1</td><td>64+128</td><td>
+version number ('V' field) - If 0 (both bits are zero), the protocol is the version defined in this document.
+Otherwise, the rest of the bits in the header and the payload may be interpreted as another version.
+</td></tr>
+<tr><td>2</td><td>32</td><td>
+request/response flag ('RR' flag) - If 0, this packet is a request (Section 3.1.1) packet.  If 1, this packet is a
+response (Section 3.1.2) packet.
+</td></tr>
+<tr><td>3</td><td>16</td><td>
+payload deflated ('PD' flag) - If 1, the payload is compressed using the DEFLATE algorithm
+(<a href="http://tools.ietf.org/html/rfc1951">RFC 1951</a>).
+</td></tr>
+<tr><td>4</td><td>8</td><td>
+deflate supported ('DS' flag) - If 1, the sender of this packet supports compression using the DEFLATE algorithm
+(<a href="http://tools.ietf.org/html/rfc1951">RFC 1951</a>).
+When this bit is 0 in a request, the payload of the response MUST NOT be compressed with DEFLATE.
+If it is set, it does not necessarily mean the server will compress all answers. The server will only use
+compression, when an uncompressed answer will not fit in the answer packet. 
+</td></tr>
+<tr><td>5</td><td>4</td><td>
+reserved - This MUST be 0.
+</td></tr>
+<tr><td>6+7</td><td>1+2</td><td>
+The value of these bits indicate payload types (See Payload Types)
+</td></tr>
+</table>
+
+*/
+
+/*!\var IRISLWZ_HEADER::transactionId
+ * \brief A 16 bit value identifying the transaction.
+ * A 16 bit value identifying the transaction. This value will be returned in the payload response descriptor
+ * (Section 3.1.2) and can be used by clients to match requests with responses.  Clients SHOULD NOT use sequential
+ * values.  Clients MUST NOT set all the bits in this value to 1 (i.e. use a value of 0xFFFF).
+ * 
+ * The value must be stored in network byte order (use htons).
+ */
+
+
+/*!\var IRISLWZ_HEADER::max_response_length
+ * \brief Total length of response packet
+ * 
+ * The total length of the UDP packet (i.e. UDP header length + payload descriptor length + XML payload length)
+ * that should not be exceeded when responding to this request.  If the server cannot provide a response
+ * that is equal to or less than this value, then it MUST respond with size information.
+ * 
+ * The value must be stored in network byte order (use htons). 
+ */
+
+/*!\var IRISLWZ_HEADER::authority_length
+ * \brief the length of the authority field in the payload descriptor
+ * 
+ */
+
+
+
+// #################################################################################################################
+/*!\struct IRISLWZ_PACKET
+ * \brief Structure to hold a request or a response
+ * 
+ * This structure is used to store a DCHK request or it's answer.
+ * 
+ * \ingroup DCHK_types
+ */
+
+/*!\var IRISLWZ_PACKET::header
+ * \brief Pointer to the iris lwz header 
+ * 
+ * Pointer to the iris lwz header
+ */
+
+/*!\var IRISLWZ_PACKET::packet
+ * \brief Pointer to the complete packet, which contains header and (compressed) payload 
+ * 
+ * Pointer to the complete packet, which contains header and (compressed) payload
+ */
+
+/*!\var IRISLWZ_PACKET::size
+ * \brief Size of complete packet, which contains header and (compressed) payload 
+ * 
+ * Size of complete packet, which contains header and (compressed) payload
+ */
+
+/*!\var IRISLWZ_PACKET::payload
+ * \brief Pointer to the (compressed) payload, which is part of IRISLWZ_PACKET::packet  
+ * 
+ * Size of complete packet, which contains header and (compressed) payload
+ */
+
+/*!\var IRISLWZ_PACKET::size_payload
+ * \brief Holds the size of the (compressed) payload 
+ * 
+ * Holds the size of the (compressed) payload
+ */
+
+/*!\var IRISLWZ_PACKET::uncompressed_payload
+ * \brief Pointer to the uncompressed payload 
+ * 
+ * Pointer to the uncompressed payload
+ */
+
+/*!\var IRISLWZ_PACKET::size_uncompressed
+ * \brief Holds the size of the uncompressed payload 
+ * 
+ * Holds the size of the uncompressed payload
+ */
+
+
+/*!\var IRISLWZ_PACKET::beautified
+ * \brief Pointer to a "beautified" version of the XML payload, which is better readable by humans. 
+ * 
+ * Pointer to a "beautified" version of the XML payload, which is better readable by humans.
+ */
+
+
+// #################################################################################################################
+/*!\struct DCHK_RECORD
+ * \brief see \ref __dchk_record
+ * 
+ * see \ref __dchk_record
+ * 
+ * \ingroup DCHK_types
+ */
+
+/*!\struct __dchk_record
+ * \brief A Structure to hold a single domain, which is part of a DCHK_DOMAINLIST
+ * 
+ * This structure is used as a list item in DCHK_DOMAINLIST and holds a single domain.
+ * 
+ * \ingroup DCHK_types
+ */
+
+/*!\var __dchk_record::next
+ * \brief Pointer to the next element in the list 
+ */
+
+/*!\var __dchk_record::domain
+ * \brief Pointer to the domain name 
+ */
+
+/*!\var __dchk_record::status
+ * \brief Value holding the status of the domain. Initially this value is set to DCHK_STATUS_UNCHECKED.
+ */
+
+
+// #################################################################################################################
+/*!\struct DCHK_DOMAINLIST
+ * \brief A Structure to hold list of domains
+ * 
+ * This structure implements a list of domains stored in DCHK_RECORD structures. It is
+ * used for bundled DCHK requests (see \ref dchk_QueryDomainList, \ref dchk_NewDomainList,
+ * \ref dchk_FreeDomainList and \ref dchk_AddDomain)
+ * 
+ * \ingroup DCHK_types
+ */
+
+
+/*!\var DCHK_DOMAINLIST::first
+ * \brief Pointer to the first element in the list 
+ */
+
+/*!\var DCHK_DOMAINLIST::last
+ * \brief Pointer to the last element in the list 
+ */
+
+/*!\var DCHK_DOMAINLIST::num
+ * \brief Number of elements in the list 
+ */
+
+ 
+// ### TESTFLAGS ############################################################################################### 
+ /*!\var IRISLWZ_HANDLE::test_flags
+ * \brief Bitfield for special testing capabilities
+ * 
+ * The bits have the following meaning:
+<table id="content" border="1" cellspacing="0" cellpadding="2">
+<tr><th>Bits</th><th>Mask</th><th>Description</th></tr>
+<tr><td>0</td><td>1</td><td>Override Version in LWZ header with value of IRISLWZ_HANDLE::test_version</td></tr> 
+<tr><td>1</td><td>2</td><td>Override complete LWZ header with value of IRISLWZ_HANDLE::test_header</td></tr>
+<tr><td>2</td><td>4</td><td>Override transaction id in LWZ header with value of IRISLWZ_HANDLE::test_tid</td></tr>
+<tr><td>3</td><td>8</td><td>Override authority length in LWZ header with value of IRISLWZ_HANDLE::test_authlen</td></tr>
+<tr><td>4</td><td>16</td><td>Truncate request packet at position stored in IRISLWZ_HANDLE::test_truncate</td></tr>
+<tr><td>5</td><td>32</td><td>Currupt compressed request packet by changing some random bytes</td></tr>
+</table>
+ 
+ */
+ 

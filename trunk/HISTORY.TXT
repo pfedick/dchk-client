@@ -1,0 +1,93 @@
+/*!\page DCHK_history History
+
+Version 0.5.8
+  - Decompression-Buffer is dynamicaly increased 5 times when the
+    initially calculated space is not big enough.
+
+Version 0.5.7, Release date: 04.08.2010		(CVS-Tag: REL_0_5_7)
+  - Removed -lstdc++ from LIBS in Makefile. The CLI is plain C, so we
+    don't need it. On Solaris it didn't even compile with this switch.
+  - fixed a segmentation fault in xmlparser.c which occured when there
+    is no lastDatabaseUpdateDateTime value or no status node in the
+    answer section.
+
+Version 0.5.6, Release date: 16.07.2009		(CVS-Tag: REL_0_5_6)
+  - Added some checks in configure for existing ns_msg_getflag, ns_skiprr,
+    ns_initparse and ns_parserr (library now compiles on Ubuntu 9.04)
+  - changed some parameters from "char *" in "const char*"
+  - changed some pointers to references in the C++ classes
+  - fixed some documentation errors
+  
+Version 0.5.5, Release date: 29.04.2009		(CVS-Tag: REL_0_5_5)
+  - Fixed an error in irislwz_Query2, which was introduced in
+    Version 0.5.4. A terminating Null-Byte got lost.
+
+Version 0.5.4, Release date: 12.03.2009		(CVS-Tag: REL_0_5_4)
+  - Lib: New function irislwz_Query2, which takes a third parameter
+    indicating the size of the payload
+  - Lib: Bugfix in irislwz_Query2/irislwz_Query: after copying the
+    payload into the internal buffer, it was not checked if the memory
+    was allocated successfully.
+  - Lib: Special characters in domain names, which are not allowed in
+    XML, get escaped now. These characters are: &, ", ', < and >
+    The new function dchk_EscapeSpecialChars is uesed for this.
+  - CLI: New parameter "-f". With this you can use the contents of a
+    file as input for the query. This must be a valid DCHK-XML request,
+    but for testing purpose this could be everything, including a
+    binary. The input is not checked for valid XML by the client. Nice
+    for testing a DCHK server :-)
+  - Removed RFC1950 option from GUI. Library and CLI still support it
+
+Version 0.5.3, Release date: 01.12.2008		(CVS-Tag: REL_0_5_3)
+  - Changed compression. Packets were compressed with zlib wrapper as
+    described in RFC 1950. But the IRISLWZ RFC 4993 specifies to use
+    RFC 1951, which is the raw deflated datastream without any header.
+    This is a bug not only in this client, but also in DENIC's DCHK server
+    and java client, which will be fixed soon.
+  - CLI: new parameter "--rfc1950" to use the zlib-wrapper in compression
+    as it was done before. The new default is now to use the raw deflated
+    datastream without zlib-wrapper.
+  - Lib: new function "irislwz_UseRFC1950", to tell the library to use the
+    zlib-wrapper, as it was done before. The new default is now to use the
+    raw datastream without zlib-wrapper.
+  - GUI: added a new checkbox to switch between wrong RFC 1950 and
+    correct RFC 1951 compression implementation.
+  - Constructor of CDchk initialise the class to send uncompressed
+    requests
+  - Fixed a memory leak in irislwz_Talk
+  - Enhanced dchk.m4 autoconf macro
+
+Version 0.5.2, Release date: 23.11.2008		(CVS-Tag: REL_0_5_2)
+  - Fixed a bug in the XML parser
+  - Fixed some typos in the configure script
+  - Added new functions for testing purposes. The functions can
+    be used to manipulate the request packet before it gets send
+    to a server. Use them to test a server's behavior of corrupt
+    data.
+       - irislwz_TestSetVersion
+       - irislwz_TestSetTransactionId
+       - irislwz_TestSetHeader
+       - irislwz_TestTruncatePacket
+       - irislwz_TestSetAuthorityLength
+       - irislwz_TestCorruptCompression
+       - irislwz_TestCleanup
+  - A response with transactionId 0xffff is not treated as error
+    anymore 
+  - Fixed a wrong path in Doxygen configuration file
+  - CLI: renamed flag --ac back to --dac. The rename in the last
+    version was completely stupid, and in fact the CLI interpreted
+    the flag as to not send compressed requests...
+  
+Version 0.5.1, Release date: 21.11.2008		(CVS-Tag: REL_0_5_1)
+  - CLI: Changed default for using compression. The new default is now
+    to send uncompressed requests.
+  - CLI: Flag --dac renamed in --ac, flag --dsc replaced by --sc
+  - GUI: Changed default for using compression. The new default is
+    to send uncompressed requests.
+  - Restructured directory structure in CVS
+  - Updated Documentation for new doxygen version 1.5.7.1
+
+Version 0.5.0, Release date: 10.10.2008		(CVS-Tag: REL_0_5_0)
+  - First public release
+
+*/
