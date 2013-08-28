@@ -46,7 +46,7 @@ RESOURCES += res.qrc \
 RC_FILE = qdchk.rc
 CONFIG(debug, debug|release) {
 	TARGET = qdchk-debug
-	unix:LIBS += @LDFLAGS@ -lstdc++ @LIBS@ @XML_LIBS@ -ldchk-debug
+	unix:LIBS += @LDFLAGS@ -lstdc++ @LIBS@ @XML_LIBS@ -L../../debug -ldchk-debug
 	win32:LIBS += -lstdc++ \
     	-L\'c:\mingw\msys\1.0\local\lib\' \
     	-ldchk-debug \
@@ -56,7 +56,7 @@ CONFIG(debug, debug|release) {
 	
 } else {
 	TARGET = qdchk
-	unix:LIBS += @LDFLAGS@ -lstdc++ @LIBS@ @XML_LIBS@ -ldchk
+	unix:LIBS += @LDFLAGS@ -lstdc++ @LIBS@ @XML_LIBS@ -L../../release -ldchk
 	win32:LIBS += -lstdc++ \
     	-L\'c:\mingw\msys\1.0\local\lib\' \
     	-ldchk \
