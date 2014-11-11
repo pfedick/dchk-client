@@ -28,10 +28,10 @@
 CC		= @CC@
 CXX		= @CXX@
 prefix	= @prefix@
-CFLAGS		=  -Wall -Iinclude -I${incdir} @CFLAGS@ @DEFS@  @XML_CPPFLAGS@
+CFLAGS		=  -Wall -Iinclude -I${incdir} @CFLAGS@ @DEFS@  @XML_CPPFLAGS@ @ZLIB_CFLAGS@
 CPPFLAGS	= @CPPFLAGS@
 LDFLAGS		= @LDFLAGS@
-LIBS		= @LIBS@ @XML_LIBS@
+LIBS		= @LIBS@ @XML_LIBS@ @ZLIB_LIBS@
 
 PROGRAM=dchk@EXEEXT@
 PROGRAMDEBUG=dchk-debug@EXEEXT@
